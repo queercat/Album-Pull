@@ -1,0 +1,27 @@
+{
+  "name": "imgur-album-downloader",
+  "version": "1.0.0",
+  "description": "Downloads an imgur album into a directory specified.",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nicolsek/Album-Pull.git"
+  },
+  "keywords": [
+    "imgur",
+    "downloader",
+    "web-scraper",
+    "scraper"
+  ],
+  "author": "Nicole Tusek",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nicolsek/Album-Pull/issues"
+  },
+  "homepage": "https://github.com/nicolsek/Album-Pull#readme"
+}
