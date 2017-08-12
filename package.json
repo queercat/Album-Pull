@@ -1,5 +1,5 @@
 {
-  "name": "imgur-album-downloader",
+  "name": "imgur-alb",
   "version": "1.0.0",
   "description": "Downloads an imgur album into a directory specified.",
   "main": "albget.js",
