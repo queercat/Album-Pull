@@ -29,4 +29,4 @@ Album Pull is now ready to use!
 ## Usage
 
 The structure to download an album looks like this.
->  node ./ <imgur_link> <optional_custom_path>
+> `node ./ <imgur_link> <optional_custom_path>`
