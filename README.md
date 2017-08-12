@@ -25,3 +25,8 @@ Then install the requirement for node.
 Album Pull is now ready to use!
 
 ![Alt Text](https://media.giphy.com/media/4tHeTWcjmRRII/giphy.gif)
+
+## Usage
+
+The structure to download an album looks like this.
+>  node ./ <imgur_link> <optional_custom_path>
