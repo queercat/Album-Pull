@@ -8,8 +8,15 @@ var clientID = "3752a956b4926c9";
 //Get the argument count.
 var args = process.argv.splice(2, 4); //Get rid of the first two elements as those aren't needed.
 
+var customPath = args.length > 1;
+var pathArg
+
+if (customPath) {
+    pathArg = args[1];
+}
+
 //Testing for usage.
-if (args.length < 1 || args.length > 1) {
+if (args.length < 1 || args.length > 2) {
     failExit("Incorrect usage! See README for usage information.")
 }
 
@@ -47,9 +54,14 @@ function parseImages(err, resp, body) {
 
     });
 
-    //The title to the album will always be the first element.
-    var dirTitle = imgTitles[0];
-    fs.mkdir(dirTitle); //Create the directory for the folders.
+    if (!customPath) {
+        //The title to the album will always be the first element.
+        var dirTitle = imgTitles[0];
+        fs.mkdir(dirTitle); //Create the directory for the folders.
+    } else {
+        var dirTitle = pathArg; //Just set that to the directory.
+    }
+
 
     imgTitles = imgTitles.slice(1, imgTitles.length); //Get rid of the album elements.
     imgLinks = imgLinks.slice(1, imgLinks.length); //Get rid of the album elements.
