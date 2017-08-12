@@ -8,25 +8,12 @@ var clientID = "3752a956b4926c9";
 //Get the argument count.
 var args = process.argv.splice(2, 4); //Get rid of the first two elements as those aren't needed.
 
-//Regular expression for seeing if the url is in a correct format.
-var urlCheck = /^https?:\/\/(\w+\.)?imgur.com\/(\w*\d\w*)+(\.[a-zA-Z]{3})?$/
-
-
 //Testing for usage.
-if (args.length < 1) {
+if (args.length < 1 || args.length > 1) {
     failExit("Incorrect usage! See README for usage information.")
 }
 
-var urlAlbum = cutUrl(args[0]); //Get the url argument for the album information.
 var urlImages = cutUrl(args[0] + "/images"); //Get the url argument for the images themselves.
-
-/* Used as options for parsing album info */
-var optionsAlbum = {
-    url: urlAlbum,
-    headers: {
-        'authorization': 'Client-ID ' + clientID
-    }
-};
 
 var optionsImages = {
     url: urlImages,
@@ -35,30 +22,8 @@ var optionsImages = {
     }
 }
 
-var directoryArg = args[1]; //The directory the user wants the files in if it exists already.
-
 function cutUrl(url) {
     return "https://api.imgur.com/3/album/" + url.split("/")[4];
-}
-
-// parseAlbum ... Get information from the album and create the directory.
-function parseAlbum(err, response, body) {
-    if (err !== null) {
-        failExit("Unable to parse album.\n" + err);
-    }
-
-    var isTitleCreated = false; //Used for checking for only the first title.
-    var dirTitle = "";
-
-    /* Parse the JSON */
-    JSON.parse(body, (key, val) => {
-        if (key == "title" && !isTitleCreated) {
-            dirTitle = val;
-            fs.mkdir(dirTitle); //Create directory.
-            isTitleCreated = true;
-        }
-    });
-
 }
 
 function parseImages(err, resp, body) {
@@ -66,27 +31,39 @@ function parseImages(err, resp, body) {
         failExit(err);
     }
 
-    var imgTitle = "";
-    var imgType = "";
-    var imgLink = "";
+
+    var imgTitles = [];
+    var imgTypes = [];
+    var imgLinks = [];
 
     JSON.parse(body, (key, val) => {
-
         if (key == "title") {
-            imgTitle = val;
-        }
-
-        if (key == "type") {
-            imgType = val;
+            imgTitles.push(val); //Push titles to array.
         }
 
         if (key == "link") {
-            imgLink = val;
+            imgLinks.push(val); //Push links to array.
         }
 
-   });
+    });
+
+    //The title to the album will always be the first element.
+    var dirTitle = imgTitles[0];
+    fs.mkdir(dirTitle); //Create the directory for the folders.
+
+    imgTitles = imgTitles.slice(1, imgTitles.length); //Get rid of the album elements.
+    imgLinks = imgLinks.slice(1, imgLinks.length); //Get rid of the album elements.
+
+    //Loop through all
+    for (image = 0; image < imgLinks.length; image++) {
+        var filename = imgLinks[image].split("/")[3];
+        download(imgLinks[image], filename, dirTitle); //Send a request to download them.
+    }
 }
 
+function download(link, filename, dir) {
+    request(link).pipe(fs.createWriteStream(dir + "/" + filename));
+}
 
 // failExit ... Fail and exit the program after printing out the reason it failed.
 function failExit(why) {
@@ -95,5 +72,5 @@ function failExit(why) {
 }
 
 /* Send the requests to Imgur API */
-request(optionsAlbum, parseAlbum);
 request(optionsImages, parseImages);
+console.log("Download of album completed!");
