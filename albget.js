@@ -13,7 +13,7 @@ var urlCheck = /^https?:\/\/(\w+\.)?imgur.com\/(\w*\d\w*)+(\.[a-zA-Z]{3})?$/
 
 
 //Testing for usage.
-if (args.length < 2) {
+if (args.length < 1) {
     failExit("Incorrect usage! See README for usage information.")
 }
 
@@ -69,8 +69,6 @@ function parseImages(err, resp, body) {
     var imgTitle = "";
     var imgType = "";
     var imgLink = "";
-
-    console.log(resp);
 
     JSON.parse(body, (key, val) => {
 

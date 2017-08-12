@@ -9,7 +9,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "npm test"
+    "test": "node ./ http://imgur.com/a/LvKOZ"
   },
   "repository": {
     "type": "git",
