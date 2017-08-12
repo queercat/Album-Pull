@@ -4,7 +4,8 @@
   "description": "Downloads an imgur album into a directory specified.",
   "main": "albget.js",
   "dependencies": {
-    "request" : "2.81.0"
+    "request" : "2.81.0",
+    "file-system" : "2.2.2"
   },
   "devDependencies": {},
   "scripts": {
