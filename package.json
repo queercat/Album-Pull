@@ -1,6 +1,6 @@
 {
   "name": "imgur-alb",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Downloads an imgur album into a directory specified.",
   "main": "albget.js",
   "dependencies": {
