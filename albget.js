@@ -38,9 +38,7 @@ function parseImages(err, resp, body) {
         failExit(err);
     }
 
-
     var imgTitles = [];
-    var imgTypes = [];
     var imgLinks = [];
 
     JSON.parse(body, (key, val) => {
@@ -85,4 +83,3 @@ function failExit(why) {
 
 /* Send the requests to Imgur API */
 request(optionsImages, parseImages);
-console.log("Download of album completed!");
