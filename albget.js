@@ -69,6 +69,8 @@ function parseImages(err, resp, body) {
         var filename = imgLinks[image].split("/")[3];
         download(imgLinks[image], filename, dirTitle); //Send a request to download them.
     }
+
+    console.log("Album has finished downloading! In DIR: " + dirTitle);
 }
 
 function removeSpecialCharacters(dir) {
