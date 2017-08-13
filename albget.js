@@ -70,7 +70,7 @@ function parseImages(err, resp, body) {
         download(imgLinks[image], filename, dirTitle); //Send a request to download them.
     }
 
-    console.log("Album has finished downloading! In DIR: " + dirTitle);
+    console.log("Album is located at --> '" + dirTitle + "'");
 }
 
 function removeSpecialCharacters(dir) {
@@ -81,8 +81,6 @@ function removeSpecialCharacters(dir) {
             newDir += dir.charAt(letter); //If the character is valid add it to the newDir.
         }
     }
-
-    console.log(newDir);
 
     return newDir;
 }
