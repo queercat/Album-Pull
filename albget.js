@@ -20,7 +20,7 @@ if (args.length < 1 || args.length > 2) {
     failExit("Incorrect usage! See README for usage information.")
 }
 
-var urlImages = cutUrl(args[0] + "/images"); //Get the url argument for the images themselves.
+var urlImages = "https://api.imgur.com/3/album/" + getAlbumHash(args[0]) + "/images"; //Get the url argument for the images themselves.
 
 var optionsImages = {
     url: urlImages,
@@ -29,8 +29,8 @@ var optionsImages = {
     }
 }
 
-function cutUrl(url) {
-    return "https://api.imgur.com/3/album/" + url.split("/")[4];
+function getAlbumHash(url) {
+    return url.split("/")[url.split("/").length - 1]
 }
 
 function parseImages(err, resp, body) {
@@ -49,19 +49,16 @@ function parseImages(err, resp, body) {
         if (key == "link") {
             imgLinks.push(val); //Push links to array.
         }
-
     });
 
     if (!customPath) {
         //The title to the album will always be the first element.
-        var dirTitle = imgTitles[0];
+        var dirTitle = removeSpecialCharacters(imgTitles[0]); //Remove unsuable directory characters.
         fs.mkdir(dirTitle); //Create the directory for the folders.
     } else {
         var dirTitle = pathArg; //Just set that to the directory.
     }
 
-
-    imgTitles = imgTitles.slice(1, imgTitles.length); //Get rid of the album elements.
     imgLinks = imgLinks.slice(1, imgLinks.length); //Get rid of the album elements.
 
     //Loop through all
@@ -71,8 +68,18 @@ function parseImages(err, resp, body) {
     }
 }
 
+function removeSpecialCharacters(dir) {
+    var newDir; //The newDir with removed invalid characters.
+
+    dir.forEach(function(letter) {
+        console.log(letter);
+    })
+
+    return "";
+}
+
 function download(link, filename, dir) {
-    request(link).pipe(fs.createWriteStream(dir + "/" + filename));
+    //request(link).pipe(fs.createWriteStream(dir + "/" + filename));
 }
 
 // failExit ... Fail and exit the program after printing out the reason it failed.
