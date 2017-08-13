@@ -5,6 +5,9 @@ var fs = require('file-system'); //For saving images and creating directories.
 /* Imgur API client id, plz no steal */
 var clientID = "3752a956b4926c9";
 
+/* For checking directory name */
+var unallowChar = "><:\"\\/|?*\0"; //List of unnallowed characters.
+
 //Get the argument count.
 var args = process.argv.splice(2, 4); //Get rid of the first two elements as those aren't needed.
 
@@ -20,7 +23,7 @@ if (args.length < 1 || args.length > 2) {
     failExit("Incorrect usage! See README for usage information.")
 }
 
-var urlImages = "https://api.imgur.com/3/album/" + getAlbumHash(args[0]) + "/images"; //Get the url argument for the images themselves.
+var urlImages = "https://api.imgur.com/3/album/" + getAlbumHash(args[0]); //Get the url argument for the images themselves.
 
 var optionsImages = {
     url: urlImages,
@@ -69,17 +72,21 @@ function parseImages(err, resp, body) {
 }
 
 function removeSpecialCharacters(dir) {
-    var newDir; //The newDir with removed invalid characters.
+    var newDir = ""; //The newDir with removed invalid characters.
 
-    dir.forEach(function(letter) {
-        console.log(letter);
-    })
+    for (letter = 0; letter < dir.length; letter++) {
+        if (unallowChar.indexOf(dir.charAt(letter)) === -1) { //If the char is valid.
+            newDir += dir.charAt(letter); //If the character is valid add it to the newDir.
+        }
+    }
 
-    return "";
+    console.log(newDir);
+
+    return newDir;
 }
 
 function download(link, filename, dir) {
-    //request(link).pipe(fs.createWriteStream(dir + "/" + filename));
+    request(link).pipe(fs.createWriteStream(dir + "/" + filename));
 }
 
 // failExit ... Fail and exit the program after printing out the reason it failed.
