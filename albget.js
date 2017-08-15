@@ -32,10 +32,21 @@ var optionsImages = {
     }
 }
 
+/**
+ * @desc Get the hash from an album by splitting the url.
+ * @param {string} url the url to get the album has from. 
+ * @return {string} the album hash.
+ */
 function getAlbumHash(url) {
     return url.split("/")[url.split("/").length - 1]
 }
 
+/**
+ * @desc Parse the images for important information to get the title and links from them.
+ * @param {error} err passing an error if the images are invalid. 
+ * @param {string} resp the response from the HTTP get req.
+ * @param {string} body the original body from the req.
+ */
 function parseImages(err, resp, body) {
     if (err != null) {
         failExit(err);
@@ -73,6 +84,11 @@ function parseImages(err, resp, body) {
     console.log("Album is located at --> '" + dirTitle + "'");
 }
 
+/**
+ * @desc Remove special characters from the directory name to prevent invalid naming.
+ * @param {string} dir the directory name.
+ * @return {string} the directory name without invalid characters. 
+ */
 function removeSpecialCharacters(dir) {
     var newDir = ""; //The newDir with removed invalid characters.
 
@@ -85,11 +101,20 @@ function removeSpecialCharacters(dir) {
     return newDir;
 }
 
+/**
+ * @desc Sends an HTTP get request and pipes it to a write stream.
+ * @param {*} link the link we're sending the req to.
+ * @param {*} filename the filename we're writing to.
+ * @param {*} dir the drectory name we're writing to.
+ */
 function download(link, filename, dir) {
     request(link).pipe(fs.createWriteStream(dir + "/" + filename));
 }
 
-// failExit ... Fail and exit the program after printing out the reason it failed.
+/**
+ * @desc Fail the program and display why.
+ * @param {err/string} why the reason the program failed if a reason is given. 
+ */
 function failExit(why) {
     console.log(why);
     process.exit(1);
