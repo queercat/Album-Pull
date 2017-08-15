@@ -103,9 +103,9 @@ function removeSpecialCharacters(dir) {
 
 /**
  * @desc Sends an HTTP get request and pipes it to a write stream.
- * @param {*} link the link we're sending the req to.
- * @param {*} filename the filename we're writing to.
- * @param {*} dir the drectory name we're writing to.
+ * @param {string} link the link we're sending the req to.
+ * @param {string} filename the filename we're writing to.
+ * @param {string} dir the drectory name we're writing to.
  */
 function download(link, filename, dir) {
     request(link).pipe(fs.createWriteStream(dir + "/" + filename));
