@@ -35,9 +35,9 @@ Sends an HTTP get request and pipes it to a write stream.
 
 | Param | Type | Description |
 | --- | --- | ---
-| link | * | the link we're sending the req to.|
-| filename | * | the filename we're writing to.|
-| dir | * | the drectory name we're writing to.|
+| link | string | the link we're sending the req to.|
+| filename | string | the filename we're writing to.|
+| dir | string | the drectory name we're writing to.|
 # failExit(why)
 
 Fail the program and display why.
